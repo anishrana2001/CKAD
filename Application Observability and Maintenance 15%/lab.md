@@ -130,5 +130,15 @@ kubectl apply -f liveness-readiness-http.yaml
 ```
 
 ```
-kubectl get pods/live-readi-http
+kubectl get pods/live-readi-http -w 
 ```
+
+### Or  you can check the pods describe command.
+
+```
+kubectl describe pod/live-readi-http
+```
+```
+kubectl get pod liveness-http -o yaml > q6-pod.yaml
+```
+
