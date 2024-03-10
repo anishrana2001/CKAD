@@ -93,7 +93,7 @@ spec:
           mountPath: /usr/share/nginx/html/
     livenessProbe:              # If application works, then it should return HTTP 200. If the endpoint returns an HTTP 500 the application is no longer responsive.
       httpGet:                  # If it is asked us to check http return code then we should use httpGet method.
-        path: /healthz          # The application has an endpoint /healthz. 
+        path: /health          # The application has an endpoint /healthz. 
         port: 8080              # The probes should use port 8080
       initialDelaySeconds: 2
       periodSeconds: 10
