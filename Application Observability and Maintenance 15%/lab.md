@@ -81,7 +81,7 @@ kind: Pod
 metadata:
   labels:
     test: readiness
-  name: live-readi-http
+  name: liveness-http
 spec:
   containers:
   - name: live-readi-container
@@ -130,13 +130,13 @@ kubectl apply -f liveness-readiness-http.yaml
 ```
 
 ```
-kubectl get pods/live-readi-http -w 
+kubectl get pods/liveness-http -w 
 ```
 
 ### Or  you can check the pods describe command.
 
 ```
-kubectl describe pod/live-readi-http
+kubectl describe pod/liveness-http
 ```
 ```
 kubectl get pod liveness-http -o yaml > q6-pod.yaml
