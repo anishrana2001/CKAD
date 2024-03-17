@@ -89,7 +89,7 @@ spec:
     image: nginx
     resources:
       requests:
-        memory: “1Gi"
+        memory: "1Gi"
         cpu: "200m"
 EOF
 ```
