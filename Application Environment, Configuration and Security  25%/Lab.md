@@ -1,4 +1,5 @@
-![image](https://github.com/anishrana2001/CKAD/assets/93471182/4d2f3c92-0af0-4651-9af3-9978d48efb43)# Topic: Application Environment, Configuration and Security  25%
+# Topic: Application Environment, Configuration and Security  25%
+#
 ## Discover and use resources that extend Kubernetes (CRD, Operators)
 ## Understand authentication, authorization and admission control
 ## Understand requests, limits, quotas
@@ -7,15 +8,17 @@
 ## Create & consume Secrets
 ## Understand ServiceAccounts
 ## Understand Application Security (SecurityContexts, Capabilities, etc.)
-
-#############################################################################################
-## you will get question from these topics, I guess.                                        #
-## Understand requests, limits, quotas                                                      #
-## Understand requests, limits, quotas                                                      #
-## Understand ConfigMaps                                                                    #
-## Create & consume Secrets                                                                 #
-## Understand ServiceAccounts                                                               #
-#############################################################################################
+##
+##
+##############################################################################################
+## You will probably get question from these topics.                                         #
+### Understand requests, limits, quotas                                                      #
+### Understand requests, limits, quotas                                                      #
+### Understand ConfigMaps                                                                    #
+### Create & consume Secrets                                                                 #
+### Understand ServiceAccounts                                                               #
+##############################################################################################
+### 
 ### 
 ### If you wish, you can create this lab on your own VMs or Laptops.
 ### My Cluster config, for your information only.
