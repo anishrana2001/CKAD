@@ -211,7 +211,15 @@ kubectl exec -it pods/nginx-secret1 -- printenv | grep BEST
 ### Task need to be performed:
 ### - Update the web-app deployment to run as an app serviceaccount. 
 ### - This serviceaccount is already created.
+###
 
+### Create the lab for this question:
+```
+kubectl create ns project-production
+kubectl create deployment web-app --image=nginx  -n project-production
+kubectl create sa app -n project-production
+```
+### Solution: 
 ``` 
 kubectl config use-context ek8s
 ``` 
