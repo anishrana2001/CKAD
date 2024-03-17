@@ -106,5 +106,57 @@ kubectl get pod -n project-one
 ```
 kubectl -n project-one describe pod/nginx-resources | grep -A 2 -i Requests
 ```
+#### First question end here.
+###
+### 
+### Use: kubectl config use-context ek8s
+### You are tasked to create a ConfigMap and consume the ConfigMap in a pod using a volume mount. 
+### Task need to be completed: 
+### - Create a configMap named another-config containing the key/value pair. key7/value5.
+### - Create a pod named nginx-configmap  and should have nginx image and mount the key you just created into the pod under directory /data/config 
+### 
+### Solution:
+
+```
+kubectl config use-context ek8s
+```
+###  Open the https://kubernetes.io/ , click on documentation , search configMap
+
+```
+kubectl create configmap another-config --from-literal=key7=value5
+```
+
+```yaml
+cat <<EOF>> q4.pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-configmap
+spec:
+  containers:
+  - name: mypod
+    image: nginx
+    volumeMounts:
+    - name: foo
+      mountPath: "/data/config"
+  volumes:
+  - name: foo
+    configMap:
+      name: another-config
+EOF
+```
+
+### Create the pod.
+```
+kubectl create -f q4.pod.yaml 
+```
+
+```
+kubectl get po 
+```
+### Post checks: 
+```
+kubectl exec -it pods/nginx-configmap -- cat /data/config/key7 ; echo
+```
 
 
