@@ -242,3 +242,16 @@ kubectl edit deployment web-app -n project-production
 ```
 kubectl -n project-production describe deployments/web-app | grep Service
 ```
+## Clear the lab.
+```
+kubectl -n project-one delete pod/nginx-resources
+kubectl delete namespaces project-one
+kubectl delete -f q4.pod.yaml
+kubectl delete configmaps another-config
+kubectl delete pod/nginx-secret1
+kubectl delete secrets app-secret1
+kubectl -n project-production delete deployment/web-app
+kubectl -n project-production delete sa/app
+kubectl delete namespaces project-production
+rm -rf q3-pod.yaml q4.pod.yaml q2-pod.yaml
+```
