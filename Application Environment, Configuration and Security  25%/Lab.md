@@ -233,7 +233,7 @@ kubectl -n project-production describe deployments/web-app | grep -i Service
 ``` 
 kubectl edit deployment web-app -n project-production
 ```
-### Add this values: "Service Account:  app" , see the below print screen.
+### Add this values: "Service Account:  app" on step 5 , see the below print screen.
 
 ![image](https://github.com/anishrana2001/CKAD/assets/93471182/cd858df6-9ebb-4bc9-bf48-81e9e690a225)
 
