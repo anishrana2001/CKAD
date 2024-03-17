@@ -107,9 +107,9 @@ kubectl get pod -n project-one
 kubectl -n project-one describe pod/nginx-resources | grep -A 2 -i Requests
 ```
 #### First question end here.
-#####                                                                                            .
-#####                                                                                            .
-### Use: kubectl config use-context ek8s
+###                                                                                            .
+###                                                                                            .
+### 2nd Qustion: Use: kubectl config use-context ek8s
 ### You are tasked to create a ConfigMap and consume the ConfigMap in a pod using a volume mount. 
 ### Task need to be completed: 
 ### - Create a configMap named another-config containing the key/value pair. key7/value5.
