@@ -158,5 +158,47 @@ kubectl get po
 ```
 kubectl exec -it pods/nginx-configmap -- cat /data/config/key7 ; echo
 ```
+###                 .
+###                 .
+### 3: Qustion: 
+### Use: Use: kubectl config use-context ek8s
+### You are tasked to create a secret and consume the secret in a pod using environment variables as follows
+### - Create a secret name app-secret1 with a key/value pair.  key30/value4
+### - Start a nginx POD named nginx-secret1 using container image nginx and add an environment a variable exposing the value of  the secret key key30 using BEST_VARIABLE1 as the name of the environment variable inside the pod. 
 
+```
+kkubectl config use-context ek8s
+```
+```
+kubectl create secret generic app-secret1 --from-literal=key30=value4
+```
 
+###  https://kubernetes.io/ , click on documentation , search secret env
+
+```yaml
+cat <<EOF>> q2-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-secret1
+spec:
+  containers:
+  - name: mycontainer
+    image: nginx
+    env:
+      - name: BEST_VARIABLE1
+        valueFrom:
+          secretKeyRef:
+            name: app-secret1
+            key: key30
+EOF
+```
+```
+kubectl create -f q2-pod.yaml
+```
+```
+kubectl get pods/nginx-secret1
+```
+```
+kubectl exec -it pods/nginx-secret1 -- printenv | grep BEST
+```
