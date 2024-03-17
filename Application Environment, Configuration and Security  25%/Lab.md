@@ -244,6 +244,7 @@ kubectl -n project-production describe deployments/web-app | grep Service
 ```
 ## Clear the lab.
 ```
+kubectl config use-context kubernetes-admin@kubernetes
 kubectl -n project-one delete pod/nginx-resources
 kubectl delete namespaces project-one
 kubectl delete -f q4.pod.yaml
