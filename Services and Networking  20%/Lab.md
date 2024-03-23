@@ -106,7 +106,15 @@ kubectl -n ckad0021 exec -it www -- curl -s -o /dev/null -v  http://ckad0021-new
 
 
 
-
+### Clear the lab.
+```
+kubectl -n ckad0021 delete pod/www  
+kubectl -n ckad0021 delete pod/storage
+kubectl -n ckad0021 delete pod/ckad0021-newpod
+kubectl -n ckad0021 delete netpol/default-deny
+kubectl delete namespace ckad0021
+rm -rf default-deny.yaml
+```
 
 ### For your references: 
 ```
