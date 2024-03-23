@@ -39,10 +39,15 @@ kubectl -n ckad0021 get pods -o wide --show-labels
 kubectl -n ckad0021 get netpol
 ```
 
+### Describe networkPolicy
+```
+kubectl -n ckad0021 describe netpol/default-deny
+```
+
 ### Check the traffic on pod "ckad0021-newpod" 
 
 ```
- kubectl -n ckad0021 exec -it www -- curl -s -o /dev/null -v http://ckad0021-newpod_IP
+ kubectl -n ckad0021 exec -it www -- curl -s -o /dev/null -m 5 -v http://ckad0021-newpod_IP 
 ```
 
 ### Now, put the yaml file in one file.
@@ -56,6 +61,10 @@ vi networkpolicy.yaml
 ```
 
 ```
+    matchLabels:
+      allow-access: "true"
+
+
   ingress:
   - from:
     - podSelector:
@@ -71,10 +80,14 @@ vi networkpolicy.yaml
 ```
 kubectl -n ckad0021 describe netpol default-deny 
 ```
+### Check pods IPs
+```
+kubectl -n ckad0021 get pods -o wide --show-labels
+```
 
 ### Send the incoming traffic to the pod "ckad0021-newpod" 
 ```
-kubectl -n ckad0021 exec -it www -- curl -s -o /dev/null -v  http://172.16.133.140
+kubectl -n ckad0021 exec -it www -- curl -s -o /dev/null -v  http://ckad0021-newpod_IP
 ```
 
 
