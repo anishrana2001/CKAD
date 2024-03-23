@@ -55,6 +55,11 @@ kubectl -n ckad0021 describe netpol/default-deny
 kubectl -n ckad0021 get netpol/default-deny -o yaml > networkpolicy.yaml
 ```
 
+### Delete the NetworkPolicy 
+```
+kubectl -n ckad0021 delete netpol/default-deny
+```
+
 ### Edit the yaml file.
 ```
 vi networkpolicy.yaml 
