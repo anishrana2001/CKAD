@@ -4,7 +4,7 @@
 kubectl create namespace ckad0021 
 kubectl -n ckad0021 run www --image=nginx --labels=app=secure-app
 kubectl -n ckad0021 run storage --image=nginx  --labels=app=secure-app
-kubectl -n ckad0021 run ckad0021-newpod --image=nginx  
+kubectl -n ckad0021 run ckad0021-newpod --image=nginx  --labels=allow-access=true
 cat <<EOF>> default-deny.yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -27,8 +27,6 @@ kubectl create -f default-deny.yaml
 ### - Update the new created pod "ckad0021-newpod" to allowed it to send and receive traffic from web and storage pods only.
 
 
-
-
 ### Check the running pods in the namespace "ckad0021 "
 ```
 kubectl -n ckad0021 get pods -o wide --show-labels 
@@ -43,14 +41,18 @@ kubectl -n ckad0021 get netpol
 ```
 kubectl -n ckad0021 describe netpol/default-deny
 ```
-
+### Check the Pods, if we can access another POD?
+```
+kubectl -n ckad0021 exec -it ckad0021-newpod -- curl http://172.16.133.143 -o /dev/null -s -v -m 5
+```
 ### Check the traffic on pod "ckad0021-newpod" 
 
 ```
  kubectl -n ckad0021 exec -it www -- curl -s -o /dev/null -m 5 -v http://ckad0021-newpod_IP 
 ```
 
-### Now, put the yaml file in one file.
+### We can directly edit the NetworkPolicy but for exam point of view, don't take risk. Thus, perform these steps.
+### Now, put the networkpolicy yaml file in one file.
 ```
 kubectl -n ckad0021 get netpol/default-deny -o yaml > networkpolicy.yaml
 ```
@@ -111,7 +113,7 @@ kubectl -n ckad0021 exec -it www -- curl -s -o /dev/null -v  http://ckad0021-new
 
 [root@master1 data]# kubectl -n ckad0021 get pods -o wide --show-labels 
 NAME              READY   STATUS    RESTARTS   AGE     IP               NODE                      NOMINATED NODE   READINESS GATES   LABELS
-ckad0021-newpod   1/1     Running   0          2m      172.16.133.140   workernode1.example.com   <none>           <none>            run=ckad0021-newpod
+ckad0021-newpod   1/1     Running   0          2m      172.16.133.140   workernode1.example.com   <none>           <none>            allow-access=true
 storage           1/1     Running   0          6h21m   172.16.14.111    workernode2.example.com   <none>           <none>            app=secure-app
 www               1/1     Running   0          6h23m   172.16.133.136   workernode1.example.com   <none>           <none>            app=secure-app
 [root@master1 data]# kubectl -n ckad0021 get netpol
