@@ -12,9 +12,7 @@ metadata:
   name: default-deny
   namespace: ckad0021
 spec:
-  podSelector:
-    matchLabels:
-      allow-access: "true"
+  podSelector: {}
   policyTypes:
     - Ingress
     - Egress
