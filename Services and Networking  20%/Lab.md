@@ -81,6 +81,12 @@ vi networkpolicy.yaml
         matchLabels:
           app: secure-app
 ```
+
+### Now, create the network policy with new settings.
+```
+kubectl apply -f networkpolicy.yaml
+```
+
 ### Verify the NetworkPolicy, now.
 ```
 kubectl -n ckad0021 describe netpol default-deny 
