@@ -82,7 +82,7 @@ curl http://192.168.1.31:31105
 
 ### Clear the LAB for question 2.
 ```
-kubectl -n kdpd002024 delete srv/srv-kdpd002024
+kubectl -n kdpd002024 delete service/srv-kdpd002024 
 kubectl -n kdpd002024 delete deploy/kdpd002024-deployment
 kubectl delete namespace kdpd002024
 ```
