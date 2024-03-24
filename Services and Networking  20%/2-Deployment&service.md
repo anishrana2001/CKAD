@@ -22,8 +22,10 @@ kubectl create deployment kdpd002024-deployment --image=nginx -n kdpd002024
 
 
 ### use the right context.
-
-### Check the deploy in the given namespace.
+```
+kubectl config use-context kubernetes-admin@kubernetes
+```
+### Check the deployment in the given namespace.
 ```
 kubectl get deployments.apps -n kdpd002024
 ```
