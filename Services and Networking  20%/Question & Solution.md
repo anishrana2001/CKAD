@@ -1,3 +1,6 @@
+### You have rollout new pods "ckad0021-newpod" on your Kubernetes cluster under namespace ckad0021. Now, you need to streanten the network security. A network policy is already there. Your tasks are followed.
+
+### - Update the new created pod "ckad0021-newpod" to allowed it to send and receive traffic from web and storage pods only.
 
 ### For your references: 
 ```
