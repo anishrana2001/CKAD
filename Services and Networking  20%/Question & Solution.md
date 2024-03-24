@@ -7,14 +7,18 @@ NAME              READY   STATUS    RESTARTS   AGE   IP               NODE      
 ckad0021-newpod   1/1     Running   0          11s   172.16.14.114    workernode2.example.com   <none>           <none>            allow-access=true
 storage           1/1     Running   0          11s   172.16.133.146   workernode1.example.com   <none>           <none>            app=secure-app
 www               1/1     Running   0          12s   172.16.133.144   workernode1.example.com   <none>           <none>            app=secure-app
-
+```
 ##
 ## 
+```
 [root@master1 data]# kubectl -n ckad0021 get netpol
 NAME           POD-SELECTOR   AGE
 default-deny   <none>         26s
+```
 ##
 ##
+
+```
 [root@master1 data]# kubectl -n ckad0021 describe netpol/default-deny
 Name:         default-deny
 Namespace:    ckad0021
