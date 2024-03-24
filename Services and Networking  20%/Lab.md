@@ -22,7 +22,7 @@ kubectl create -f default-deny.yaml
 ```
 
 
-### You have rollout new pods "ckad0021-newpod" on your Kubernetes cluster under namespace ckad0021. Now, you need to streanten the network security. A network policy is already there. You tasks are followed.
+### You have rollout new pods "ckad0021-newpod" on your Kubernetes cluster under namespace ckad0021. Now, you need to streanten the network security. A network policy is already there. Your tasks are followed.
 
 ### - Update the new created pod "ckad0021-newpod" to allowed it to send and receive traffic from web and storage pods only.
 
@@ -106,7 +106,7 @@ kubectl -n ckad0021 exec -it www -- curl -s -o /dev/null -v  http://ckad0021-new
 
 
 
-### Clear the lab.
+### Clear the lab for question 1.
 ```
 kubectl -n ckad0021 delete pod/www  
 kubectl -n ckad0021 delete pod/storage
@@ -116,121 +116,94 @@ kubectl delete namespace ckad0021
 rm -rf default-deny.yaml
 ```
 
-### For your references: 
+
+
+
+## Question 2: 
+### Lab creation ###
+```
+kubectl create ns kdpd002024
+kubectl create deployment kdpd002024-deployment --image=nginx -n kdpd002024
 ```
 
-[root@master1 data]# kubectl -n ckad0021 get pods -o wide --show-labels 
-NAME              READY   STATUS    RESTARTS   AGE   IP               NODE                      NOMINATED NODE   READINESS GATES   LABELS
-ckad0021-newpod   1/1     Running   0          11s   172.16.14.114    workernode2.example.com   <none>           <none>            allow-access=true
-storage           1/1     Running   0          11s   172.16.133.146   workernode1.example.com   <none>           <none>            app=secure-app
-www               1/1     Running   0          12s   172.16.133.144   workernode1.example.com   <none>           <none>            app=secure-app
-[root@master1 data]# kubectl -n ckad0021 get netpol
-NAME           POD-SELECTOR   AGE
-default-deny   <none>         26s
-[root@master1 data]# kubectl -n ckad0021 describe netpol/default-deny
-Name:         default-deny
-Namespace:    ckad0021
-Created on:   2024-03-23 21:08:47 +0530 IST
-Labels:       <none>
-Annotations:  <none>
-Spec:
-  PodSelector:     <none> (Allowing the specific traffic to all pods in this namespace)
-  Allowing ingress traffic:
-    <none> (Selected pods are isolated for ingress connectivity)
-  Allowing egress traffic:
-    <none> (Selected pods are isolated for egress connectivity)
-  Policy Types: Ingress, Egress
-[root@master1 data]# kubectl -n ckad0021 exec -it ckad0021-newpod -- curl -o /dev/null -s -v -m 5 http://172.16.133.146 
-*   Trying 172.16.133.146:80...
-* Connection timed out after 5008 milliseconds
-* Closing connection 0
-command terminated with exit code 28
-[root@master1 data]#  kubectl -n ckad0021 exec -it www -- curl -s -o /dev/null -m 5 -v http://172.16.14.114
-*   Trying 172.16.14.114:80...
-* Connection timed out after 5004 milliseconds
-* Closing connection 0
-command terminated with exit code 28
-[root@master1 data]# kubectl -n ckad0021 get netpol/default-deny -o yaml > networkpolicy.yaml
 
-[root@master1 data]# kubectl -n ckad0021 delete netpol/default-deny
-networkpolicy.networking.k8s.io "default-deny" deleted
-[root@master1 data]# 
+### Use: kubectl config use-context kubernetes-admin@kubernetes
+### Your task is scaling an existing deployment for availability and creating a service to expose the deployment within your infrastructure.  
+### Start with the deployment named kdpd002024-deployment which has already been deployed to the namespace kdpd002024 edit it to :
+### .
+### - Add the role: webfrontend  key/value label to the pod template metadata to identify the pod for the service definition.
+### - have 5 Replicas
 
-[root@master1 data]# vi networkpolicy.yaml 
+### Next, create and deploy in namespace kdpd002024 a service that accomplished the following:
+### - Exposes the services on TCP port 8000
+### - is mapped to the pods defined by the specification of kdpd002024-deployment
+### - should have NodePort type.
+### - has a name of srv-kdpd002024.
 
-[root@master1 data]# cat  networkpolicy.yaml 
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  creationTimestamp: "2024-03-23T15:38:47Z"
-  generation: 1
-  name: default-deny
-  namespace: ckad0021
-  resourceVersion: "277203"
-  uid: 973e0fc3-39c4-4388-9a31-0584606b2abb
-spec:
-  podSelector:
-    matchLabels:
-      allow-access: "true"
-  policyTypes:
-  - Ingress
-  - Egress
 
-  ingress:
-  - from:
-    - podSelector:
-        matchLabels:
-          app: secure-app
-  egress:
-  - to:
-    - podSelector:
-        matchLabels:
-          app: secure-app
-[root@master1 data]# 
 
-[root@master1 data]# kubectl apply -f networkpolicy.yaml
-networkpolicy.networking.k8s.io/default-deny created
-[root@master1 data]# kubectl -n ckad0021 describe netpol default-deny 
-Name:         default-deny
-Namespace:    ckad0021
-Created on:   2024-03-23 21:15:45 +0530 IST
-Labels:       <none>
-Annotations:  <none>
-Spec:
-  PodSelector:     allow-access=true
-  Allowing ingress traffic:
-    To Port: <any> (traffic allowed to all ports)
-    From:
-      PodSelector: app=secure-app
-  Allowing egress traffic:
-    To Port: <any> (traffic allowed to all ports)
-    To:
-      PodSelector: app=secure-app
-  Policy Types: Ingress, Egress
-[root@master1 data]# kubectl -n ckad0021 get pods -o wide --show-labels
-NAME              READY   STATUS    RESTARTS   AGE     IP               NODE                      NOMINATED NODE   READINESS GATES   LABELS
-ckad0021-newpod   1/1     Running   0          7m11s   172.16.14.114    workernode2.example.com   <none>           <none>            allow-access=true
-storage           1/1     Running   0          7m11s   172.16.133.146   workernode1.example.com   <none>           <none>            app=secure-app
-www               1/1     Running   0          7m12s   172.16.133.144   workernode1.example.com   <none>           <none>            app=secure-app
-[root@master1 data]# kubectl -n ckad0021 exec -it www -- curl -s -o /dev/null -v  http://172.16.14.114
-*   Trying 172.16.14.114:80...
-* Connected to 172.16.14.114 (172.16.14.114) port 80 (#0)
-> GET / HTTP/1.1
-> Host: 172.16.14.114
-> User-Agent: curl/7.88.1
-> Accept: */*
-> 
-< HTTP/1.1 200 OK
-< Server: nginx/1.25.4
-< Date: Sat, 23 Mar 2024 15:46:13 GMT
-< Content-Type: text/html
-< Content-Length: 615
-< Last-Modified: Wed, 14 Feb 2024 16:03:00 GMT
-< Connection: keep-alive
-< ETag: "65cce434-267"
-< Accept-Ranges: bytes
-< 
-{ [615 bytes data]
-* Connection #0 to host 172.16.14.114 left intact
-[root@master1 data]# 
+### use the right context.
+
+### Check the deploy in the given namespace.
 ```
+kubectl get deployments.apps -n kdpd002024
+```
+
+### Check the Pods, with labels.
+```
+kubectl -n kdpd002024 get pods --show-labels 
+```
+
+### First thing first, take the backup of this deployment into one file.
+```
+kubectl -n kdpd002024 get  deployments.apps kdpd002024-deployment -o yaml > kdpd002024-deployment.yaml
+```
+
+### Now, edit this deployment and increase the replicas and add one more label at pod template.
+```
+kubectl -n kdpd002024 edit deployments.apps kdpd002024-deployment 
+```
+
+
+### For post check, we can check the PODs labels.
+```
+kubectl -n kdpd002024 get pods --show-labels 
+```
+
+### We can create a service as per question. 
+```
+kubectl -n kdpd002024 expose deployment kdpd002024-deployment --name=srv-kdpd002024 --port=8000 --target-port=80 --type=NodePort  --labels=role=webfrontend
+```
+
+### Check again the pods' labels. Its should get the new labels
+```
+kubectl -n kdpd002024 get pods --show-labels 
+```
+### Check the IP address of our newly created service.
+```
+kubectl -n kdpd002024 get service/srv-kdpd002024 
+```
+
+
+### For more details, use describe command.
+```
+kubectl -n kdpd002024 describe service/srv-kdpd002024 
+```
+###  If you wish, you can check the endpoints. Not required in the EXAM.
+```
+kubectl -n kdpd002024 get endpoints
+```
+### For post check, you can curl the VM IP address with port number. 
+```
+curl http://192.168.1.31:31105
+```
+
+
+### Clear the LAB for question 2.
+```
+kubectl -n kdpd002024 delete srv/srv-kdpd002024
+kubectl -n kdpd002024 delete deploy/kdpd002024-deployment
+kubectl delete namespace kdpd002024
+```
+
+
