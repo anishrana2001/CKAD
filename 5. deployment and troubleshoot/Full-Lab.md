@@ -339,7 +339,7 @@ kubectl get  deployment -A
 #### - dev
 
 ### Tasks need to be performed:
-### Identify the broken pod and write its name and namespace to /var/data/broken.txt in the format <namespace>/<pod>
+### Identify the broken pod and write its name and namespace to /var/data/broken.txt in the format "namespace"/"pod"
 ### Copy the events into the file /var/data/error.txt. Use "-o wide" output specifier with your command.
 ### Fix the issue.
 
