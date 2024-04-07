@@ -9,7 +9,7 @@ kubectl create namespace kdp0024
 kubectl create namespace kdpd0023
 kubectl -n kdpd0023 create deployment web --image=nginx:1.24.0
 kubectl create ns qa 
-kubectl create ns pre-prod 
+kubectl create ns lab
 kubectl create ns prod
 kubectl create ns dev
 kubectl create deployment failed-deploy --image=ngin
