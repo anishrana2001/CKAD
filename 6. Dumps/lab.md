@@ -1,4 +1,4 @@
-
+![image](https://github.com/anishrana2001/CKAD/assets/93471182/e496d3a1-5992-47b6-b346-9aaae36ff9b5)
 ### Task:   kubectl config use-context k8s-c1-s
 ### 1. A Dockerfile is created on /datadir/Dockerfile for you. You need to create built an image with the name ubuntu-apache and tag 3.0 from this Dockerfile. You may install and use the tool of your choice.
 ### 2. Using the tool of your choice export the built container image in OC-format and store it on /data1/ubuntu-apache-3.0.tar
@@ -8,7 +8,7 @@
 
 ### kubectl config use-context k8s-c1-s
 
-### First, check the file.
+### First, check the file. For task 1.
 ```
 cd /datadir/
 ```
@@ -32,7 +32,18 @@ docker build -t ubuntu-apache:3.0  .
 docker image ls
 ```
 
-### Create a pod named apache-pod1 from the newly created image and bind apache port (80) with 34080 port number.
+### For task 2, examiner asked us to create a .tar file from this image.
+
+```
+sudo docker save ubuntu-apache:3.0 > /data1/ubuntu-apache-3.0.tar
+```
+
+### Post check for task 2.
+```
+ls -l /data1/ubuntu-apache-3.0.tar
+```
+
+### Task 3, Create a pod named apache-pod1 from the newly created image and bind apache port (80) with 34080 port number.
 
 ```
 docker run -d -it --name apache-pod1 -p 34080:80 ubuntu-apache:3.0
