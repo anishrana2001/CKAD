@@ -1,4 +1,4 @@
-![image](https://github.com/anishrana2001/CKAD/assets/93471182/e496d3a1-5992-47b6-b346-9aaae36ff9b5)
+
 ### Task:   kubectl config use-context k8s-c1-s
 ### 1. A Dockerfile is created on /datadir/Dockerfile for you. You need to create built an image with the name ubuntu-apache and tag 3.0 from this Dockerfile. You may install and use the tool of your choice.
 ### 2. Using the tool of your choice export the built container image in OC-format and store it on /data1/ubuntu-apache-3.0.tar
