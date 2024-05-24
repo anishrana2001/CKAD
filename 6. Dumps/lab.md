@@ -1,3 +1,33 @@
+### Create a Lab.
+```
+kubectl create namespace ckad0021 
+cat << EOF | kubectl apply -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: security-deploy
+  namespace: ckad0021
+  labels:
+    app: security-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: security-deploy
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: security-deploy
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+EOF
+```
+
+
 
 ### Task:   kubectl config use-context k8s-c1-s
 ### 1. A Dockerfile is created on /datadir/Dockerfile for you. You need to create built an image with the name ubuntu-apache and tag 3.0 from this Dockerfile. You may install and use the tool of your choice.
@@ -58,3 +88,79 @@ docker ps
 ```
 docker container inspect apache-pod1 | grep -i port
 ```
+
+
+
+
+
+
+
+
+### Question 3: 
+
+### Task:  kubectl config use-context k8s-c1-s
+
+### There is one deployment "security-deploy" is running under namespace "ckad0021". You need to set securityContext user with 1000 forbide allowPrivilleged escalation.
+
+### Solution
+
+
+### use the correct context:
+```
+kubectl config use-context k8s-c1-s
+```
+
+### Precheck- Check the deployment in the given namespace.
+```
+kubectl -n ckad0021 get deployments.apps security-deploy 
+```
+
+### Validate the securityContext
+```
+kubectl -n ckad0021 get deployments.apps -o yaml | grep -A 1 securityContext
+```
+### we can directly edit this deployment.
+
+```
+kubectl -n ckad0021 edit deployments.apps security-deploy
+```
+-------------
+      securityContext:
+        runAsUser: 1000
+
+        securityContext:
+          allowPrivilegeEscalation: false
+----------------
+
+### PostChecks- Check the deployment's are still running?
+```
+kubectl -n ckad0021 get deployments.apps security-deploy 
+```
+### Post check 2 - Validate the securityContext
+```
+kubectl -n ckad0021 get deployments.apps -o yaml | grep -A 1 securityContext
+```
+
+### FYI that, if we login into the pod and execute "ps" command, we will observe 1000 PID only.
+```
+kubectl -n ckad0021  exec -it pods/security-deploy-5dfcfcf88f-nrtc2 -- /bin/sh
+```
+```
+ps
+```
+```
+touch file.txt
+```
+
+
+Clear the lab
+
+```
+kubectl -n ckad0021 delete deployments.apps/security-deploy 
+kubectl delete namespaces/ckad0021
+```
+
+
+
+
+
