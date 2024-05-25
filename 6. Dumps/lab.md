@@ -123,7 +123,10 @@ docker container inspect apache-pod1 | grep -i port
 
 
 ### Solution
-
+### Use the right Context 
+```
+kubectl config use-context k8s-c1-s
+```
 
 ### We can also check this ResourceQuota by executing below commands.
 
