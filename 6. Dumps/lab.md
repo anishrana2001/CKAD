@@ -146,7 +146,7 @@ kubectl -n ns-quota1 edit deployment resource-deploy
 In the container section
     resources:
       limits:
-        memory: "500Mi"
+        memory: "1Gi"
 ----------------
 
 ### Post checks: Validate the memory quota.
