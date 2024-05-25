@@ -114,12 +114,6 @@ docker container inspect apache-pod1 | grep -i port
 ### Task:  kubectl config use-context k8s-c1-s
 
 ### There is one deployment "security-deploy" is running under namespace "ckad0021". You need to set securityContext user with 1000 forbide allowPrivilleged escalation.
-### There is one deployment "resource-deploy" is already running under namespace "ns-quota1". In a namespace resource limits is configured. You need to set resource request (memory) half of the  max memory assigned to the namespace
-
-
-
-
-
 
 
 ### Solution
