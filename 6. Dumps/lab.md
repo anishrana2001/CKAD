@@ -1,6 +1,8 @@
 ### Create a Lab.
 ```
-kubectl create namespace ckad0021 
+kubectl create namespace ckad0021
+kubectl create namespace ns-quota1
+kubectl -n ns-quota1 create deployment resource-deploy --image=nginx
 cat << EOF | kubectl apply -f -
 apiVersion: apps/v1
 kind: Deployment
@@ -25,6 +27,21 @@ spec:
         name: nginx
         resources: {}
 EOF
+
+cat <<EOF | kubectl create -f -
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: mem-cpu-demo
+  namespace: ns-quota1
+spec:
+  hard:
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "2"
+    limits.memory: 2Gi
+EOF
+
 ```
 
 
@@ -92,6 +109,59 @@ docker container inspect apache-pod1 | grep -i port
 
 
 
+### Question 2: 
+
+### Task:  kubectl config use-context k8s-c1-s
+
+### There is one deployment "security-deploy" is running under namespace "ckad0021". You need to set securityContext user with 1000 forbide allowPrivilleged escalation.
+### There is one deployment "resource-deploy" is already running under namespace "ns-quota1". In a namespace resource limits is configured. You need to set resource request (memory) half of the  max memory assigned to the namespace
+
+
+
+
+
+
+
+### Solution
+
+
+### We can also check this ResourceQuota by executing below commands.
+
+```
+kubectl -n ns-quota1 describe resourcequota mem-cpu-demo
+```
+
+### Pre-checks: First check the deployment details.
+```
+kubectl -n ns-quota1 get deployment resource-deploy
+```
+
+### Validate, if memory quota is already set or not?
+
+```
+kubectl -n ns-quota1 get deployment resource-deploy -o yaml | grep -i mem
+```
+
+```
+kubectl -n ns-quota1 edit deployment resource-deploy
+```
+-------------
+In the container section
+    resources:
+      limits:
+        memory: "500Mi"
+----------------
+
+### Post checks: Validate the memory quota.
+```
+kubectl -n ns-quota1 get deployment resource-deploy -o yaml | grep -i mem
+```
+
+### Check if our deployment is still running ?
+
+```
+kubectl -n ns-quota1 get deployments.apps
+```
 
 
 
@@ -158,6 +228,9 @@ Clear the lab
 ```
 kubectl -n ckad0021 delete deployments.apps/security-deploy 
 kubectl delete namespaces/ckad0021
+kubectl -n ns-quota1 delete deployment resource-deploy
+kubectl -n ns-quota1 delete resourcequotas mem-cpu-demo
+kubectl delete namespace ns-quota1
 ```
 
 
