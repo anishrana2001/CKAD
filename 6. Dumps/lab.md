@@ -1,4 +1,4 @@
-![image](https://github.com/anishrana2001/CKAD/assets/93471182/f3ae2182-da1d-4429-a8ce-dee349ae967c)### Create a Lab.
+
 ```
 mkdir /datadir/
 mkdir /data1/
