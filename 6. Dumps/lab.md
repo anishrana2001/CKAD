@@ -153,12 +153,12 @@ kubectl -n ns-quota1 get deployment resource-deploy -o yaml | grep -i mem
 ```
 kubectl -n ns-quota1 edit deployment resource-deploy
 ```
--------------
+```
 In the container section
     resources:
       limits:
         memory: "1Gi"
-----------------
+```
 
 ### Post checks: Validate the memory quota.
 ```
