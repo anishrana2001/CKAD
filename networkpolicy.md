@@ -1,0 +1,187 @@
+# Network Policy:
+
+## You must not create, modify, delete any network policy while working on this task.
+##    ¯\\_(ツ)_/¯
+## Task: Pod ckad-netpol-newpod in the ckad-netpol namespace to use a NetworkPolicy allowing the Pod to send and receive traffic only to and from the pods web and db          
+##    ¯\\_(ツ)_/¯
+
+## Step 1. How to create the Lab (creating namespace, pods and NetworkPolicies)?
+
+### Create the namespace
+```
+kubectl create namespace ckad-netpol 
+```
+### Create the 3 pods
+```
+kubectl -n ckad-netpol run web --image=nginx --port=80
+```
+```
+kubectl -n ckad-netpol run db --image=nginx --port=80 
+```
+```
+kubectl -n ckad-netpol run ckad-netpol-newpod --image=nginx --port=80 --labels="env=newpod"
+```
+```
+kubectl -n ckad-netpol get pods -o wide
+```
+```
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+[root@master1 ~]# kubectl -n ckad-netpol get pods -o wide
+NAME                 READY   STATUS    RESTARTS      AGE   IP               NODE                      NOMINATED NODE   READINESS GATES
+ckad-netpol-newpod   1/1     Running   1 (10m ago)   21h   172.16.14.103    workernode2.example.com   <none>           <none>
+db                   1/1     Running   1 (10m ago)   21h   172.16.14.104    workernode2.example.com   <none>           <none>
+web                  1/1     Running   1 (14m ago)   21h   172.16.133.165   workernode1.example.com   <none>           <none
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+```
+### Create the NetworkPolicies 
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: ckad-netpol
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+EOF
+
+cat <<EOF | kubectl apply -f -
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: web-netpol
+  namespace: ckad-netpol
+spec:
+  podSelector:
+    matchLabels:
+      run: web
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            env: db
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+            env: db
+EOF
+
+
+cat <<EOF | kubectl apply -f -
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-netpol
+  namespace: ckad-netpol
+spec:
+  podSelector:
+    matchLabels:
+      run: db
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            run: web
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+            run: web
+EOF
+
+
+cat <<EOF | kubectl apply -f -
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-all
+  namespace: ckad-netpol
+spec:
+  podSelector:
+    matchLabels:
+      env: newpod
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            env: newpod
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+            env: newpod
+EOF
+```
+## Now, our lab is setup and it is really helpful when we do the practice at home
+### Step 2. How to validate (Pre-check)
+```
+kubectl -n ckad-netpol exec -it ckad-netpol-newpod -- curl  web_POD_IP
+```
+```
+kubectl -n ckad-netpol exec -it ckad-netpol-newpod -- curl  db_POD_IP --connect-timeout 3
+```
+```
+kubectl -n ckad-netpol exec -it web -- curl  ckad-netpol-newpod_IP --connect-timeout 3
+```
+```
+kubectl -n ckad-netpol exec -it db -- curl  ckad-netpol-newpod_IP --connect-timeout 3
+```
+### Step 3. How to check what NetworkPolicies are created in this NameSpace?
+```
+[root@master1 ~]# kubectl -n ckad-netpol get netpol
+NAME               POD-SELECTOR   AGE
+allow-all          app=newpod     46s
+db-netpol          app=db         4m20s
+default-deny-all   <none>         113m
+web-netpol         app=web        4m20s
+```
+
+
+
+```
+kubectl -n ckad-netpol exec -it web -- curl  ckad-netpol-newpod_IP --connect-timeout 3
+```
+```
+kubectl -n ckad-netpol exec -it ckad-netpol-newpod -- curl  db_IP --connect-timeout 3
+```
+```
+kubectl -n ckad-netpol exec -it ckad-netpol-newpod -- curl  web_IP --connect-timeout 3
+```
+## How to resolve this issue....
+## How to add the labels 💡💡
+```
+kubectl -n ckad-netpol label pods db env=newpod
+```
+```
+kubectl -n ckad-netpol label pods web env=newpod
+```
+```
+kubectl -n ckad-netpol get pods --show-labels -o wide
+```
+```
+kubectl -n ckad-netpol exec -it ckad-netpol-newpod -- curl   POD_IP --connect-timeout 3
+```
+
+### How to delete the lab 👈👈👈
+```
+kubectl -n ckad-netpol delete netpol allow-all db-netpol  default-deny-all web-netpol  
+kubectl -n ckad-netpol delete pods ckad-netpol-newpod db web
+kubectl delete namespaces ckad-netpol
+```
+
+
+
+
