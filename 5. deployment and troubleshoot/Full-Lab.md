@@ -272,7 +272,7 @@ kubectl -n kdpd0023 rollout history deployment web
 #### Use context : kubectl config use-context kubernetes-admin@kubernetes
 
 #### Developer occasionally need to submit pods that run periodically.
-#### - Create a manifest file /var/data/periodic.yaml in a YAML format.
+#### - Create a manifest file /tmp/cronjob.yaml in a YAML format.
 #### - Yaml that runs the shell command "uname" in a single busybox container. 
 #### - The command should run every minute and must complete within 28 seconds or be terminated by Kubernetes. 
 #### - The CronJob name and container name should both be hellocron
@@ -285,17 +285,113 @@ kubectl -n kdpd0023 rollout history deployment web
 kubectl create cronjob  -h
 ```
 
-#### Now, create the cronjob with the help of kubectl command.
+#### Now, we can copy the first example and udpate the command like belwo.
 ```
-kubectl create cronjob hellocron --image=busybox --schedule="*/1 * * * *" 
+kubectl create cronjob hellocron --image=busybox --schedule="*/1 * * * *" > /tmp/cronjob.yaml
 ```
+#### Open the file /tmp/cronjob.yaml
+```yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: hellocron
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: hellocron
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          activeDeadlineSeconds: 22    ### Add this line
+          containers:
+          - command:
+            - uname
+            image: busybox
+            name: hellocron
+            resources: {}
+          restartPolicy: OnFailure
+  schedule: '*/1 * * * *'
+status: {}
+```
+### Create the cronjob from the yaml file.
+```
+kubectl apply -f /tmp/cronjob.yaml
+```
+
 
 #### Post check :
 ```
 kubectl get cronjobs.batch 
 ```
+#### Check the pods are created 
+```
+kubectl get pods
+```
 
+### Check the logs of this pod.
+```
+kubectl logs hellocron-29045640-hqr55
+```
 
+#### Full answer is below.
+```
+[root@master1 ~]# kubectl create cronjob -h | head
+Create a cron job with the specified name.
+
+Aliases:
+cronjob, cj
+
+Examples:
+  # Create a cron job
+  kubectl create cronjob my-job --image=busybox --schedule="*/1 * * * *"
+  
+  # Create a cron job with a command
+[root@master1 ~]# 
+
+[root@master1 ~]#  kubectl create cronjob hellocron --image=busybox --schedule="*/1 * * * *" --dry-run=client -o yaml -- uname 
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: hellocron
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: hellocron
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - command:
+            - uname
+            image: busybox
+            name: hellocron
+            resources: {}
+          restartPolicy: OnFailure
+  schedule: '*/1 * * * *'
+status: {}
+[root@master1 ~]#  kubectl create cronjob hellocron --image=busybox --schedule="*/1 * * * *" --dry-run=client -o yaml -- uname > /tmp/cronjob.yaml
+[root@master1 ~]# vi /tmp/cronjob.yaml 
+[root@master1 ~]# kubectl apply -f /tmp/cronjob.yaml 
+[root@master1 ~]# kubectl apply -f /tmp/cronjob.yaml 
+cronjob.batch/hellocron created
+[root@master1 ~]# kubectl get cronjobs.batch 
+NAME        SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+hellocron   */1 * * * *   False     1        3s              9s
+[root@master1 ~]# kubectl get pods
+NAME                       READY   STATUS      RESTARTS   AGE
+hellocron-29045640-hqr55   0/1     Completed   0          12s
+[root@master1 ~]# kubectl logs hellocron-29045640-hqr55 
+Linux
+[root@master1 ~]#
+```
 #  Question : 
 #### Use context : kubectl config use-context kubernetes-admin@kubernetes
 
