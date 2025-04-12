@@ -22,3 +22,15 @@
 ### Split traffic between `blue=70%` and `green=30%`   👈👈👈
 
  💡💡💡 _**Add the common label to both deployments.**_
+
+ <details>
+<summary>> Solution</summary>
+
+
+ <details>
+<summary> Task 1: </summary>
+## Create a namespace called `tiger` namespace.
+This is the content of the collapsible section. You can include any Markdown-formatted text, lists, or code here.
+
+</details>
+</details>
