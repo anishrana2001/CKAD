@@ -272,10 +272,10 @@ kubectl -n kdpd0023 rollout history deployment web
 #### Use context : kubectl config use-context kubernetes-admin@kubernetes
 
 #### Developer occasionally need to submit pods that run periodically.
-#### - Create a manifest file /tmp/cronjob.yaml in a YAML format.
-#### - Yaml that runs the shell command "uname" in a single busybox container. 
-#### - The command should run every minute and must complete within 28 seconds or be terminated by Kubernetes. 
-#### - The CronJob name and container name should both be hellocron
+#### - Create a manifest file `/tmp/cronjob.yaml` in a YAML format.
+#### - Yaml that runs the shell command "uname" in a single `busybox` container. 
+#### - The command should run `every minute` and must complete within `28 seconds` or be terminated by Kubernetes. 
+#### - The CronJob name and container name should both be `hellocron`
 #### - Create the cronjob from the above manifest file.
 
 ### Solution:
@@ -306,7 +306,7 @@ spec:
         metadata:
           creationTimestamp: null
         spec:
-          activeDeadlineSeconds: 22    ### Add this line
+          activeDeadlineSeconds: 28    ### Add this line
           containers:
           - command:
             - uname
