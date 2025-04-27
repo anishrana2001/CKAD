@@ -426,7 +426,7 @@ kubectl get  deployment -A
 ```
 
 #  Question : 
-#### Use context : kubectl config use-context kubernetes-admin@kubernetes
+#### Use context : `kubectl config use-context kubernetes-admin@kubernetes`
 
 ### A application is failing due to livenessProbe. If can be run on any of the below namespaces.
 #### - qa
@@ -435,8 +435,8 @@ kubectl get  deployment -A
 #### - dev
 
 ### Tasks need to be performed:
-### Identify the broken pod and write its name and namespace to /var/data/broken.txt in the format "namespace"/"pod"
-### Copy the events into the file /var/data/error.txt. Use "-o wide" output specifier with your command.
+### Identify the broken pod and write its name and namespace to `/var/data/broken.txt` in the format `"namespace"/"pod"`
+### Copy the events into the file /var/data/error.txt. Use `"-o wide"` output specifier with your command.
 ### Fix the issue.
 
 ### Solution: 
@@ -505,6 +505,11 @@ spec:
       periodSeconds: 3
       successThreshold: 1
       timeoutSeconds: 1
+```
+
+### Create the pod again.
+```
+kubectl apply -f /var/data/liveness.yaml
 ```
 #### Post check:
 ```
