@@ -133,6 +133,11 @@ docker container inspect apache-pod1 | grep -i port
 kubectl config use-context k8s-c1-s
 ```
 
+### How to check the resourcequota?
+```
+kubectl -n ns-quota1 get resourcequotas
+```
+
 ### We can also check this ResourceQuota by executing below commands.
 
 ```
