@@ -42,9 +42,9 @@ kubectl apply -f liveness-exec.yaml
 
 
 # Question: 
-#### Use context : kubectl config use-context kubernetes-admin@kubernetes
+#### Use context : `kubectl config use-context kubernetes-admin@kubernetes`
 ### Anytime a team needs to run a container on Kubernetes they will need to define a pod within which to run the container. Please complete the following:
-###  - Create a POD manifest file "/var/data/pod.yaml" in YAML format with name of pod app1 that runs a container named green using image nginx:1.25.4 with these command line argument -R 7 --testgreen
+###  - Create a POD manifest file "/var/data/pod.yaml" in YAML format with name of pod `app1` that runs a container named `green` using image `nginx:1.24.0` with these command line argument `-R 7 --testgreen`
 ###  - Create a pod from above yaml file created in previous step.
 ### -  when the pod is running, redirect summary data of pod into one file "/var/data/out1.json" in JSON format. Using kubectl command.
 ### - All the files are already created well in advance for you.
