@@ -302,11 +302,11 @@ spec:
       creationTimestamp: null
       name: hellocron
     spec:
+      activeDeadlineSeconds: 28    ### Add this line
       template:
         metadata:
           creationTimestamp: null
         spec:
-          activeDeadlineSeconds: 28    ### Add this line
           containers:
           - command:
             - uname
