@@ -287,8 +287,10 @@ kubectl create cronjob  -h
 
 #### Now, we can copy the first example and udpate the command like belwo.
 ```
-kubectl create cronjob hellocron --image=busybox --schedule="*/1 * * * *" > /tmp/cronjob.yaml
+kubectl create cronjob hellocron --image=busybox --schedule="*/1 * * * *" --dry-run=client -o yaml -- uname > /tmp/cronjob.yaml
 ```
+
+### https://kubernetes.io/docs/concepts/workloads/controllers/job/#job-termination-and-cleanup
 #### Open the file /tmp/cronjob.yaml
 ```yaml
 apiVersion: batch/v1
@@ -302,7 +304,7 @@ spec:
       creationTimestamp: null
       name: hellocron
     spec:
-      activeDeadlineSeconds: 28    ### Add this line
+      activeDeadlineSeconds: 28    ### 👈👈👈 Add this line "cronjob.spec.jobTemplate.spec.activeDeadlineSeconds"
       template:
         metadata:
           creationTimestamp: null
