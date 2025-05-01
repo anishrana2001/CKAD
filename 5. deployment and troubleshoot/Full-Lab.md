@@ -119,12 +119,12 @@ app1   0/1     Completed           2 (14s ago)   54s
 ```
 
 #  Question : 
-#### Use context : kubectl config use-context kubernetes-admin@kubernetes
-### Create a new deployment for running NGINX with the following parameters. 
-#### - Run the deployment in the kdp0024 namespace. The namespace has already been created. 
-#### - Name the deployment mydeploy and configure with 3 replicas
-#### - Configure the pod with a container image of nginx:1.24.0
-#### - Set an environment variable of NGINX_Port=8080 and also expose that port for the container above
+#### Use context : `kubectl config use-context kubernetes-admin@kubernetes`
+### Create a new deployment for running `NGINX` with the following parameters. 
+#### - Run the deployment in the `kdp0024` namespace. The namespace has already been created. 
+#### - Name the deployment `mydeploy` and configure with `3` replicas
+#### - Configure the pod with a container image of `nginx:1.24.0`
+#### - Set an environment variable of `NGINX_Port=8080` and also expose that port for the container above
 
 
 
@@ -204,10 +204,10 @@ kubectl -n kdp0024 exec -it mydeploy-d44f485d8-948v2 -- printenv | grep NGINX_Po
 
 
 # Question: 
-#### Use context : kubectl config use-context kubernetes-admin@kubernetes
+#### Use context : `kubectl config use-context kubernetes-admin@kubernetes`
 ### As a Kubernetes application developer you will often observe that sometimes you need to update the running application. 
-### -  Update the web deployment in the kdpd0023 namespace with a maxSurge of 10% and a maxUnavailable of 5%
-### -  Perform a rolling update of the web deployment changing the nginx:1.24.0 image version to 1.24.1
+### -  Update the web deployment in the `kdpd0023` namespace with a maxSurge of `10%` and a maxUnavailable of `5%`
+### -  Perform a rolling update of the web deployment changing the `nginx:1.24.0` image version to `1.24.1`
 ### -  Perform the rollback the web deployment to the previous version 
 
 
@@ -269,11 +269,11 @@ kubectl -n kdpd0023 rollout history deployment web
 ```
 
 #  Question : 
-#### Use context : kubectl config use-context kubernetes-admin@kubernetes
+#### Use context : `kubectl config use-context kubernetes-admin@kubernetes`
 
 #### Developer occasionally need to submit pods that run periodically.
 #### - Create a manifest file `/tmp/cronjob.yaml` in a YAML format.
-#### - Yaml that runs the shell command "uname" in a single `busybox` container. 
+#### - Yaml that runs the shell command `uname` in a single `busybox` container. 
 #### - The command should run `every minute` and must complete within `28 seconds` or be terminated by Kubernetes. 
 #### - The CronJob name and container name should both be `hellocron`
 #### - Create the cronjob from the above manifest file.
@@ -395,7 +395,7 @@ Linux
 [root@master1 ~]#
 ```
 #  Question : 
-#### Use context : kubectl config use-context kubernetes-admin@kubernetes
+#### Use context : `kubectl config use-context kubernetes-admin@kubernetes`
 
 #### A deployment is failing on the cluster due an incorrect image being specified. You need to locate the deployment and fix the issue.
 
