@@ -94,17 +94,15 @@ kubectl get pod -n project-one
 ```
 kubectl -n project-one describe pod/nginx-resources | grep -A 2 -i Requests
 ```
-#### First question end here.
-###                                                                                            .
-###                                                                                            .
-### 2nd Qustion: Use: kubectl config use-context ek8s
+---                                                                                         .
+### 2nd Qustion: Use: `kubectl config use-context ek8s`
 ### You are tasked to create a ConfigMap and consume the ConfigMap in a pod using a volume mount. 
-### Task need to be completed: 
-### - Create a configMap named another-config containing the key/value pair. key7/value5.
-### - Create a pod named nginx-configmap  and should have nginx image and mount the key you just created into the pod under directory /data/config 
-### 
+- Task need to be completed: 
+- Create a configMap named another-config containing the key/value pair. `key7/value5`.
+- Create a pod named `nginx-configmap` and should have `nginx` image and mount the key you just created into the pod under directory `/data/config`
+ 
 ### Solution:
-
+---
 ```
 kubectl config use-context ek8s
 ```
@@ -140,20 +138,19 @@ kubectl create -f q4.pod.yaml
 ```
 
 ```
-kubectl get po 
+kubectl get po
 ```
 ### Post checks: 
 ```
 kubectl exec -it pods/nginx-configmap -- cat /data/config/key7 ; echo
 ```
-###                 .
-###                 .
+---
 ### 3: Question: 
-### Use: kubectl config use-context ek8s
-### You are tasked to create a secret and consume the secret in a pod using environment variables as follows
-### - Create a secret name app-secret1 with a key/value pair.  key30/value4
-### - Start a nginx POD named nginx-secret1 using container image nginx and add an environment a variable exposing the value of  the secret key key30 using BEST_VARIABLE1 as the name of the environment variable inside the pod. 
-
+- Use: `kubectl config use-context ek8s`
+- You are tasked to create a secret and consume the secret in a pod using environment variables as follows
+- Create a secret name `app-secret1` with a key/value pair `key30/value4`
+- Start a POD named `nginx-secret1` using container image `nginx` and add an environment variable exposing the value of  the secret key `key30` using `BEST_VARIABLE1` as the name of the environment variable inside the pod. 
+---
 ```
 kubectl config use-context ek8s
 ```
@@ -190,16 +187,14 @@ kubectl get pods/nginx-secret1
 ```
 kubectl exec -it pods/nginx-secret1 -- printenv | grep BEST
 ```
-
-###                            .
-###                            .
+---
 ### 4: Question:
-### Use: kubectl config use-context ek8s
-### There is one deployment web-app is running under namespace project-production
-### Task need to be performed:
-### - Update the web-app deployment to run as an app serviceaccount. 
-### - This serviceaccount is already created.
-###
+- Use: `kubectl config use-context ek8s`
+- There is one deployment `web-app` is running under namespace `project-production`
+- Task need to be performed:
+- Update the `web-app` deployment to run as an `app` serviceaccount. 
+- This serviceaccount is already created.
+---
 
 ### Create the lab for this question:
 ```
