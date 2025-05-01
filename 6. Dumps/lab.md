@@ -57,14 +57,14 @@ EOF
 
 
 
-### Task:   kubectl config use-context k8s-c1-s
-### 1. A Dockerfile is created on /datadir/Dockerfile for you. You need to create built an image with the name ubuntu-apache and tag 3.0 from this Dockerfile. You may install and use the tool of your choice.
-### 2. Using the tool of your choice export the built container image in OC-format and store it on /data1/ubuntu-apache-3.0.tar
-### 3. Create a container named apache-pod1 from the newly created image and bind apache port (80) with 34080 port number.
+### Task:   `kubectl config use-context k8s-c1-s`
+### 1. A Dockerfile is created on `/datadir/Dockerfile` for you. You need to create built an image with the name `ubuntu-apache` and tag `3.0` from this Dockerfile. You may install and use the tool of your choice.
+### 2. Using the tool of your choice export the built container image in OC-format and store it on /`data1/ubuntu-apache-3.0.tar`
+### 3. Create a container named `apache-pod1` from the newly created image and bind apache port `80` with `34080` port number.
 
 ### Solution
 
-### kubectl config use-context k8s-c1-s
+### `kubectl config use-context k8s-c1-s`
 
 ### First, check the file. For task 1.
 ```
@@ -122,9 +122,9 @@ docker container inspect apache-pod1 | grep -i port
 
 ### Question 2: 
 
-### Task:  kubectl config use-context k8s-c1-s
+### Task:  `kubectl config use-context k8s-c1-s`
 
-### There is one deployment "resource-deploy" is running under namespace "ns-quota1". You need to set resource request (memory) half of the  max memory assigned to the namespace.
+### There is one deployment `resource-deploy` is running under namespace `ns-quota1`. You need to set resource request (memory) half of the  max memory assigned to the namespace.
 
 
 ### Solution
@@ -181,9 +181,9 @@ kubectl -n ns-quota1 get deployments.apps
 
 ### Question 3: 
 
-### Task:  kubectl config use-context k8s-c1-s
+### Task:  `kubectl config use-context k8s-c1-s`
 
-### There is one deployment "security-deploy" is running under namespace "ckad0021". You need to set securityContext user with 1000 forbide allowPrivilleged escalation.
+### There is one deployment `security-deploy` is running under namespace `ckad0021`. You need to set securityContext user with `1000` forbide allowPrivilleged escalation.
 
 ### Solution
 
