@@ -10,13 +10,6 @@
 - **Understand Application Security (SecurityContexts, Capabilities, etc.)**
 
 
-##############################################################################################
-## You will probably get question from these topics.                                         #
-### Understand requests, limits, quotas                                                      #
-### Understand ConfigMaps                                                                    #
-### Create & consume Secrets                                                                 #
-### Understand ServiceAccounts                                                               #
-##############################################################################################
 
 ### If you wish, you can create this lab on your own VMs or Laptops.
 ### My Cluster config, for your information only.
@@ -51,21 +44,18 @@ kubectl config set-context ek8s \
 --cluster=kubernetes \
 --user=kubernetes-admin
 ```
-###############################################################
 
-### Question:     kubectl config use-context ek8s
 
-### Use: kubectl config use-context ek8s
+### Question: `kubectl config use-context ek8s`
 
 ### Create a pod that requests a certain amount of CPU and memory.
 ### Complete the task:
-### - Create a namespace  project-one
-### - Create a POD named nginx-resources in the project-one namespace that required a minimum of 200m CPU and 1Gi memory for its container
-### - The pod should use the  nginx image.  
+### - Create a namespace  `project-one`
+### - Create a POD named `nginx-resources` in the `project-one` namespace that required a minimum of `200m` CPU and `1Gi` memory for its container
+### - The pod should use the `nginx` image.  
 
 ### Solution :
-
-### 
+--- 
 ```
 kubectl config use-context ek8s
 ```
