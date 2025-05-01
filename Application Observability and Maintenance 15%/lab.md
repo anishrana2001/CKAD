@@ -1,21 +1,19 @@
 # Question from Implement probes and health checks
-#
-## A pod is running on the cluster, but it is not responding.
-## It is expected to Kubernetes to restart the pod when an endpoint returns an http 500 on the /healthz endpoint. The service, liveness-http, should never send traffic to the pod when it is falling. 
-## Please complete the following:
-## - The application has an endpoint. /started. That will indicate if it can accept traffic by returning HTTP 200. If the endpoint returns an HTTP 500, the application has not yet finished initialization.
-## 
-## - The application has another endpoint. /healthz that will indicate if the application is still working as expected by returning an HTTP 200 if the endpoint returns an HTTP 500 the application is no longer responsive.
-## 
-## - Configure the liveness-http pod provided to use these endpoints.
-## - The probes should use port 8080
-## SOlution:
-###
+
+- A pod is running on the cluster, but it is not responding.
+- It is expected to Kubernetes to restart the pod when an endpoint returns an http 500 on the `/healthz` endpoint. The service `liveness-http` should never send traffic to the pod when it is falling. 
+- Please complete the following:
+- The application has an endpoint. `/started`. That will indicate if it can accept traffic by returning `HTTP 200`. If the endpoint returns an HTTP 500, the application has not yet finished initialization.
+ 
+- The application has another endpoint. `/healthz` that will indicate if the application is still working as expected by returning an HTTP 200 if the endpoint returns an HTTP 500 the application is no longer responsive.
+
+- Configure the liveness-http pod provided to use these endpoints.
+- The probes should use port 8080
+---
+## Solution:
+
 ### In order to reslove the issue, first, we have to create a lab for this question. In this question, we have two endpoints. Thus, we have to modify the NGINX configuration file with these two endpoints.
 ### For these 2 points, we must create 2 files. So, that we can send the request to these pages?
-
-
-
 
 ### Create the NGINX configuration file. It should have two additional web pages, such as healthz and started.
 ```
