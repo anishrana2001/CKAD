@@ -1,5 +1,5 @@
 # Topic: Application Environment, Configuration and Security  25%
-#
+
 - **Discover and use resources that extend Kubernetes (CRD, Operators)**
 - **Understand authentication, authorization and admission control**
 - **Understand requests, limits, quotas**
@@ -13,13 +13,11 @@
 ##############################################################################################
 ## You will probably get question from these topics.                                         #
 ### Understand requests, limits, quotas                                                      #
-### Understand requests, limits, quotas                                                      #
 ### Understand ConfigMaps                                                                    #
 ### Create & consume Secrets                                                                 #
 ### Understand ServiceAccounts                                                               #
 ##############################################################################################
-### 
-### 
+
 ### If you wish, you can create this lab on your own VMs or Laptops.
 ### My Cluster config, for your information only.
 ```yaml
